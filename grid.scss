@@ -1,0 +1,55 @@
+$columnWidth: 150px;
+$outerMargin: 5px;
+$cellMargin: 5px;
+
+body {
+    font-family: Helvetica;
+    line-height: 24px;
+}
+
+.alf-grid {
+    position: relative;
+    height: 236px;
+    border: 1px solid #000;
+    margin-bottom: 20px;
+}
+
+[class*=alf-col-] {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 38px;
+  width: $columnWidth;
+  margin-bottom: $cellMargin;
+  background-color: #888;
+  color: #FFF;
+  font-size: 30px;
+  line-height: 40px;
+  text-align: center;
+  display: -webkit-box;
+  -webkit-box-pack: center;
+  -webkit-box-align: center;
+}
+
+.alf-col-top {
+    margin-top: $outerMargin;
+}
+
+.alf-col-bottom {
+    margin-bottom: $outerMargin;
+}
+
+
+@for $i from 1 through 10 {
+    .alf-col-#{$i} {
+        left: ($columnWidth * ($i - 1)) + ($cellMargin * ($i - 1)) + $outerMargin;
+    }
+
+    .alf-cols-#{$i} {
+      width: ($columnWidth * $i) + ($cellMargin * ($i - 1)) + ($outerMargin * 2);
+    }
+
+    .alf-colspan-#{$i} {
+      width: ($columnWidth * $i) + ($cellMargin * ($i - 1));
+    }
+}

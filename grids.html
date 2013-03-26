@@ -1,0 +1,81 @@
+<html>
+<head><title>Grid editor</title></head>
+<link rel="stylesheet" href="grid.css">
+</head>
+<body>
+<div class="grids">
+    <div class="alf-grid alf-cols-2" id="cols2-simple">
+        <div class="alf-col-1 alf-flex"></div>
+        <div class="alf-col-2 alf-flex"></div>
+    </div>
+
+    <div class="alf-grid alf-cols-2" id="cols2-colspan2-top">
+        <div class="alf-col-1 alf-colspan-2"></div>
+        <div class="alf-col-1 alf-flex"></div>
+        <div class="alf-col-2 alf-flex"></div>
+    </div>
+
+    <div class="alf-grid alf-cols-2" id="cols2-colspan2-bottom">
+        <div class="alf-col-1 alf-flex"></div>
+        <div class="alf-col-2 alf-flex"></div>
+        <div class="alf-col-1 alf-colspan-2"></div>
+    </div>
+
+    <div class="alf-grid alf-cols-3" id="cols3-colspan2-bottom">
+        <div class="alf-col-1 alf-colspan-3"></div>
+        <div class="alf-col-1 alf-flex"></div>
+        <div class="alf-col-2 alf-flex"></div>
+        <div class="alf-col-1 alf-colspan-2"></div>
+        <div class="alf-col-3 alf-flex"></div>
+    </div>
+
+    <div class="alf-grid alf-cols-4" id="cols4-colspan2-top">
+        <div class="alf-col-1 alf-colspan-4"></div>
+        <div class="alf-col-1 alf-flex"></div>
+        <div class="alf-col-2 alf-colspan-2"></div>
+        <div class="alf-col-2 alf-flex"></div>
+        <div class="alf-col-3 alf-flex"></div>
+        <div class="alf-col-4 alf-flex"></div>
+        <div class="alf-col-4"></div>
+    </div>
+
+    <div class="alf-grid alf-cols-4" id="cols4-colspan3-top">
+        <div class="alf-col-1 alf-colspan-3"></div>
+        <div class="alf-col-1 alf-flex"></div>
+        <div class="alf-col-2 alf-flex"></div>
+        <div class="alf-col-3 alf-flex"></div>
+        <div class="alf-col-4 alf-flex"></div>
+        <div class="alf-col-3 alf-colspan-2"></div>
+    </div>
+
+    <div class="alf-grid alf-cols-5" id="cols5">
+        <div class="alf-col-1 alf-colspan-5"></div>
+        <div class="alf-col-1 alf-flex"></div>
+        <div class="alf-col-1"></div>
+        <div class="alf-col-2 alf-colspan-2"></div>
+        <div class="alf-col-2 alf-flex"></div>
+        <div class="alf-col-3 alf-flex"></div>
+        <div class="alf-col-4 alf-colspan-2"></div>
+        <div class="alf-col-4 alf-flex"></div>
+        <div class="alf-col-5 alf-flex"></div>
+    </div>
+</div>
+<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+<script src="http://underscorejs.org/underscore-min.js"></script>
+<script src="grid.js"></script>
+<script>
+    $('[class*=alf-col-]').each(function () {
+        var className = this.className.replace(/alf-col-(top|bottom)/g, '');
+
+        $(this).html('<span>' + className + '</span>');
+    });
+
+    $('.alf-grid').each(function () {
+        $(this).grid({
+            lineHeight: 24,
+            prefix: 'alf-'
+        });
+    });
+</script>
+</body>
+</html>

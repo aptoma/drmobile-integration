@@ -92,7 +92,11 @@
                      * @return {void}
                      */
                     eventTriggered: function () {
-                        this.eventFrames[this.frameIndex].src = 'event://' + escape(JSON.stringify([].slice.call(arguments)));
+                        // This is deactivated since normal browsers will display an error when this is run.
+                        // Only activate the line below when this is run in a WebView inside a native wrapper app
+
+                        // this.eventFrames[this.frameIndex].src = 'event://' + escape(JSON.stringify([].slice.call(arguments)));
+
                         this.frameIndex = (this.frameIndex + 1) % this.eventFrames.length;
                     }
                 });

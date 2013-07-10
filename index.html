@@ -10,14 +10,6 @@
     <link rel="stylesheet" type="text/css" href="vendor/aptoma/alf/alf.css">
     <link rel="apple-touch-icon-precomposed" href="gfx/appicon.png"/>
     <style type="text/css">
-        body {
-            overflow: hidden;
-        }
-
-        .alf-layer {
-            overflow: hidden;
-        }
-
         .event-frame {
             display: none;
         }
@@ -30,15 +22,15 @@
         <div class="alf-pages">
             <div class="alf-page alf-page-1">
                 <section class="alf-page-loader swiper-page-is-loading"></section>
-                <section class="alf-page-content"></section>
+                <section class="alf-page-content alf-is-scrollable-y"></section>
             </div>
             <div class="alf-page alf-page-2">
                 <section class="alf-page-loader swiper-page-is-loading"></section>
-                <section class="alf-page-content"></section>
+                <section class="alf-page-content alf-is-scrollable-y"></section>
             </div>
             <div class="alf-page alf-page-3">
                 <section class="alf-page-loader swiper-page-is-loading"></section>
-                <section class="alf-page-content"></section>
+                <section class="alf-page-content alf-is-scrollable-y"></section>
             </div>
         </div>
     </div>
@@ -150,7 +142,7 @@
 
                 this.scrollView = new Alf.nav.ScrollView($('#alf-layer-1').get(0), {
                     numberOfPages: app.compiledPages.length,
-                    renderDeferTime: 100
+                    overflowScrolling: true
                 });
 
                 this.scrollView.on('pageWillRender', function (el, pageNum) {

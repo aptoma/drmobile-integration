@@ -158,15 +158,14 @@
             }
 
         };
-
         app.initialize();
         window.app = app;
+
 		window.onerror = function(message, url, linenumber) {
 			var error = url + ':' + linenumber + ' - ' + message;
 			app.logToConsole(error);
 			app.bridge.trigger('error', error);
 		}
-
 
         Alf.hub.on('fullscreenWillAppear', function () {
             app.bridge.trigger('displayState', {event:'fullscreenWillAppear'});
@@ -182,12 +181,7 @@
 
         Alf.hub.on('fullscreenDidDisappear', function() {
             app.bridge.trigger('displayState', {event:'fullscreenDidDisappear'});
-        });        
-
-		$(document).ready(function () {
-			app.bridge.trigger('integrationLoaded');
-		});
-
+        });       
 
 		app.event.on('renderPage', function(deskedPage, assetsBaseUrl, contextHash) {			
 			var pageContentEl = $('#alf-layer-content');
@@ -215,6 +209,9 @@
 			//app.logToAll('Got appstate: ' + state);
 		});
 
+		$(document).ready(function () {
+			app.bridge.trigger('integrationLoaded');
+		});
     });
 
 </script>

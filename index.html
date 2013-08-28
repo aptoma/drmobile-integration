@@ -6,7 +6,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes" >
     <meta name="apple-mobile-web-app-status-bar-style" content="black" >
     <meta name="format-detection" content="telephone=no" >
-    <title>DrMobile integration example</title>
+    <title>Aftenposten integration</title>
     <link rel="stylesheet" type="text/css" href="vendor/aptoma/alf/alf.css">
     <link rel="apple-touch-icon-precomposed" href="gfx/appicon.png"/>
     <style type="text/css">
@@ -17,24 +17,11 @@
 </head>
 <body>
 
+
+
 <div class="chrome" id="chrome">
-    <div class="alf-layer alf-layer-1 layer-content" id="alf-layer-1">
-        <div class="alf-pages">
-            <div class="alf-page alf-page-1">
-                <section class="alf-page-loader swiper-page-is-loading"></section>
-                <section class="alf-page-content alf-is-scrollable-y"></section>
-            </div>
-            <div class="alf-page alf-page-2">
-                <section class="alf-page-loader swiper-page-is-loading"></section>
-                <section class="alf-page-content alf-is-scrollable-y"></section>
-            </div>
-            <div class="alf-page alf-page-3">
-                <section class="alf-page-loader swiper-page-is-loading"></section>
-                <section class="alf-page-content alf-is-scrollable-y"></section>
-            </div>
-        </div>
-    </div>
-    <div class="alf-layer alf-layer-2 layer-fullscreen is-hidden" id="alf-layer-2"></div>
+	<div class="alf-layer layer-content" id="alf-layer-content"></div>
+	<div class="alf-layer layer-fullscreen is-hidden" id="alf-layer-fullscreen"></div>
 </div>
 
 <iframe width="0" height="0" frameborder="0" class="event-frame"></iframe>
@@ -45,24 +32,32 @@
 <script type="text/javascript" src="vendor/aptoma/alf/alf.min.js"></script>
 <script type="text/javascript">
     require(['alf'], function (Alf) {
-        var app, publicationName, url, assetsBaseUrl;
 
-        // The name of the publication in LayoutPreview
-        publicationName = 'pub_11';
+		var $ = Alf.dom;    	
 
-        // The name of the format you want to use
-        formatName = 'ipad_landscape';
-
-        // Article URL. Point this to your DrMobile API endpoint (DrLib)
-        url = 'http://rai-dev.aptoma.no:9000/drmobile.json?formatName=' + formatName + '&publicationName=' + publicationName + '&limit=50&callback=?';
-
-        app = {
+        var app = {
             initialize: function () {
-                this.pages = [];
-
+                this.isEmbeddedInApp = true;
+                this.page = null;
+                this.event = null;
+                this.bridge = null;
                 this.initBridge();
                 this.initLayers();
-                this.initScrollView();
+            },
+
+            logToApp: function(data) {	
+				this.bridge.trigger('log', data);
+            },
+
+            logToConsole: function(data) {
+				if (typeof console == "object") {
+					console.log(data);
+				}			
+            },
+
+            logToAll: function(data) {
+				this.logToConsole(data);
+				this.logToApp(data);
             },
 
             /**
@@ -92,12 +87,8 @@
                      * @return {void}
                      */
                     eventTriggered: function () {
-                        // This is deactivated since normal browsers will display an error when this is run.
-                        // Only activate the line below when this is run in a WebView inside a native wrapper app
-
-                        // this.eventFrames[this.frameIndex].src = 'event://' + escape(JSON.stringify([].slice.call(arguments)));
-
-                        this.frameIndex = (this.frameIndex + 1) % this.eventFrames.length;
+                    	this.frameIndex = (this.frameIndex + 1) % this.eventFrames.length;
+                    	this.eventFrames[this.frameIndex].src = 'event://' + escape(JSON.stringify([].slice.call(arguments)));
                     }
                 });
 
@@ -113,58 +104,23 @@
              * @return {void}
              */
             initLayers: function () {
+
                 this.layerManager = new Alf.layer.Manager();
 
                 this.pageLayer = new Alf.layer.Page({
-                    el: '#alf-layer-1',
+                    el: '#alf-layer-content',
                     manager: this.layerManager
                 });
 
                 this.fullscreenLayer = new Alf.layer.Fullscreen({
-                    el: '#alf-layer-2',
+                    el: '#alf-layer-fullscreen',
                     manager: this.layerManager
                 });
 
                 this.pageLayer.render();
                 this.fullscreenLayer.render();
-
-                Alf.hub.on('fullscreenWillAppear', function () {
-                    // Tell the native wrapper app that an element is about to enter fullscreen mode
-                    this.bridge.trigger('fullscreenWillAppear');
-                }, this);
             },
 
-            /**
-             * Initialize the scroll view
-             *
-             * This is only needed if you want HTML-navigation
-             *
-             * @return {void}
-             */
-            initScrollView: function () {
-                var that = this;
-
-                this.scrollView = new Alf.nav.ScrollView($('#alf-layer-1').get(0), {
-                    numberOfPages: app.compiledPages.length,
-                    overflowScrolling: true
-                });
-
-                this.scrollView.on('pageWillRender', function (el, pageNum) {
-                    // Tell the native wrapper that a page is about to be rendered
-                    that.bridge.trigger('pageWillRender', pageNum);
-                    app.renderPage(el, pageNum);
-                });
-
-                /**
-                 * This will make sure there are no memory leaks when pages are removed
-                 */
-                this.scrollView.on('pageWillDestruct', function (el, pageNum) {
-                    app.pages[pageNum] && app.pages[pageNum].tearDown();
-                    delete app.pages[pageNum];
-                });
-
-                this.scrollView.start();
-            },
 
             /**
              * Render the page on screen
@@ -172,47 +128,93 @@
              * Takes the compiled content and uses Alf.layout.Page to do rendering
              *
              * @param {HTMLElement} el the element to put the page inside
-             * @param {number} pageNum the page number
+		     * @param {Object} deskedPage 
+		     * @param {String} contextHash used for race conditions
+		     * @param {String} assetsBaseUrl 
+		     * @param {Function} onDone 
              * @return {void}
              */
-            renderPage: function (el, pageNum) {
-                var page;
+            renderPage: function (pageContentEl, deskedPage, assetsBaseUrl, onDone) {
 
-                this.pages[pageNum] = page = new Alf.layout.Page({
+		        if (this.page) {
+		            this.page.tearDown();
+		            this.page = null;
+		        }
+
+		        var page;
+                this.page = page = new Alf.layout.Page({
                     layer: this.pageLayer,
-                    assetsBaseUrl: assetsBaseUrl
+		            assetsBaseUrl: assetsBaseUrl
                 });
 
-                page.on('loadComplete', function () {
-                    // Tell the native wrapper that a page has finished loading
-                    this.bridge.trigger('loadComplete');
-                }, this);
+		        page.on('loadComplete', function () {
+					onDone();
+		        });
 
-                page.decompile(this.compiledPages[pageNum], function () {
-                    page.render(el);
+                page.decompile(deskedPage, function () {
+                   page.render(pageContentEl);
                 });
+
             }
+
         };
 
-        /**
-         * Fetch all articles and pages
-         */
-        $.get(url, function (response) {
-            app.compiledPages = [];
-            app.pages = {};
-
-            assetsBaseUrl = response.items[0].service.assetsBaseUrl;
-
-            // Convert all article-pages into a flat array of pages
-            response.items.forEach(function (article) {
-                app.compiledPages = app.compiledPages.concat(article.compiled.pages);
-            });
-
-            app.initialize();
-        }, 'json');
-
-
+        app.initialize();
         window.app = app;
+		window.onerror = function(message, url, linenumber) {
+			var error = url + ':' + linenumber + ' - ' + message;
+			app.logToConsole(error);
+			app.bridge.trigger('error', error);
+		}
+
+
+        Alf.hub.on('fullscreenWillAppear', function () {
+            app.bridge.trigger('displayState', {event:'fullscreenWillAppear'});
+        }, this);
+
+        Alf.hub.on('fullscreenWillDisappear', function () {
+            app.bridge.trigger('displayState', {event:'fullscreenWillDisappear'});
+        }, this);
+
+        Alf.hub.on('fullscreenDidAppear', function() {
+            app.bridge.trigger('displayState', {event:'fullscreenDidAppear'});
+        });
+
+        Alf.hub.on('fullscreenDidDisappear', function() {
+            app.bridge.trigger('displayState', {event:'fullscreenDidDisappear'});
+        });        
+
+		$(document).ready(function () {
+			app.bridge.trigger('integrationLoaded');
+		});
+
+
+		app.event.on('renderPage', function(deskedPage, assetsBaseUrl, contextHash) {			
+			var pageContentEl = $('#alf-layer-content');
+
+			window.scrollTo(0);
+			app.renderPage(pageContentEl, deskedPage, assetsBaseUrl, function() {
+				app.bridge.trigger('readyForDisplay', contextHash);
+			});
+        	app.bridge.trigger('renderPageCompleted', contextHash);
+		});
+
+		app.event.on('applicationInfo', function (info) {
+			//app.logToAll('Got applicationInfo:');
+		});
+
+		app.event.on('visibillity', function(state) {
+			//app.logToAll('Got visibillity state: ' + state);
+		});
+
+		app.event.on('focus', function(state) {
+			//app.logToAll('Got focus state: ' + state);
+		});
+
+		app.event.on('appstate', function(state) {
+			//app.logToAll('Got appstate: ' + state);
+		});
+
     });
 
 </script>

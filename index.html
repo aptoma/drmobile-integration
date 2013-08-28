@@ -87,7 +87,8 @@
                      * @return {void}
                      */
                     eventTriggered: function () {
-                    	this.frameIndex = (this.frameIndex + 1) % this.eventFrames.length;
+                    	this.frameIndex++;
+                    	this.frameIndex = this.frameIndex % this.eventFrames.length;
                     	this.eventFrames[this.frameIndex].src = 'event://' + escape(JSON.stringify([].slice.call(arguments)));
                     }
                 });

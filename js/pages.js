@@ -29,19 +29,4 @@ define('pages', [], function(){
 		}
 	};
 
-	/*
-	$.get(url, function (response) {
-            app.compiledPages = [];
-
-            assetsBaseUrl = response.items[0].service.assetsBaseUrl;
-
-            // Convert all article-pages into a flat array of pages
-            response.items.forEach(function (article) {
-                app.compiledPages = app.compiledPages.concat(article.compiled.pages)
-            });
-
-            app.initialize();
-        }, 'json');
-*/
-
 });

@@ -1,6 +1,10 @@
-define('main', ['alf'], function (Alf) {
+define('main', ['alf', 'js/widgets/disqus'], function (Alf, disqus) {
 	"use strict";
-	var $ = Alf.dom;    	
+	var $ = Alf.dom;
+
+	var widgets = [];
+      widgets.push(disqus);
+
 
 	var app = {
 		initialize: function () {
@@ -12,14 +16,14 @@ define('main', ['alf'], function (Alf) {
 			this.initLayers();
 		},
 
-		logToApp: function(data) {	
+		logToApp: function(data) {
 			this.bridge.trigger('log', data);
 		},
 
 		logToConsole: function(data) {
 			if (typeof console == "object") {
 				console.log(data);
-			}			
+			}
 		},
 
 		logToAll: function(data) {
@@ -76,6 +80,7 @@ define('main', ['alf'], function (Alf) {
 
 			this.pageLayer = new Alf.layer.Page({
 				el: '#alf-layer-content',
+				widgets: widgets,
 				manager: this.layerManager
 			});
 
@@ -95,10 +100,10 @@ define('main', ['alf'], function (Alf) {
 		 * Takes the compiled content and uses Alf.layout.Page to do rendering
 		 *
 		 * @param {HTMLElement} el the element to put the page inside
-		 * @param {Object} deskedPage 
+		 * @param {Object} deskedPage
 		 * @param {String} contextHash used for race conditions
-		 * @param {String} assetsBaseUrl 
-		 * @param {Function} onDone 
+		 * @param {String} assetsBaseUrl
+		 * @param {Function} onDone
 		 * @return {void}
 		 */
 		renderPage: function (pageContentEl, deskedPage, assetsBaseUrl, onDone) {
@@ -111,6 +116,7 @@ define('main', ['alf'], function (Alf) {
 			var page;
 			this.page = page = new Alf.layout.Page({
 				layer: this.pageLayer,
+				widgets: widgets,
 				assetsBaseUrl: assetsBaseUrl
 			});
 
@@ -149,14 +155,14 @@ define('main', ['alf'], function (Alf) {
 
 	Alf.hub.on('fullscreenDidDisappear', function() {
 		app.bridge.trigger('displayState', {event:'fullscreenDidDisappear'});
-	});        
+	});
 
 	$(document).ready(function () {
 		app.bridge.trigger('integrationLoaded');
 	});
 
 
-	app.event.on('renderPage', function(deskedPage, assetsBaseUrl, contextHash) {			
+	app.event.on('renderPage', function(deskedPage, assetsBaseUrl, contextHash) {
 		var pageContentEl = $('#alf-layer-content');
 
 		window.scrollTo(0);

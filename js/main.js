@@ -8,7 +8,7 @@ define('main', ['alf', 'js/widgets/disqus'], function (Alf, disqus) {
 
 	var app = {
 		initialize: function () {
-			this.isEmbeddedInApp = this.getURLParameter('isEmbeddedInApp', '1') == '1';
+			this.isEmbeddedInApp = this.getURLParameter('isEmbeddedInApp', '1') != '0';
 			this.page = null;
 			this.event = null;
 			this.bridge = null;
@@ -17,10 +17,9 @@ define('main', ['alf', 'js/widgets/disqus'], function (Alf, disqus) {
 		},
 
 		getURLParameter: function(name, fallbackValue) {
-    		var value = decodeURI(
-        		(RegExp(name + '=' + '(.+?)(&|$)').exec(location.search)||[,null])[1]
+    		return decodeURI(
+        		(RegExp(name + '=' + '(.+?)(&|$)').exec(location.search)||[,fallbackValue])[1]
     			);
-    		return value != null ? value : fallbackValue;
 		},
 
 		logToApp: function(data) {
@@ -65,11 +64,11 @@ define('main', ['alf', 'js/widgets/disqus'], function (Alf, disqus) {
 				 * @return {void}
 				 */
 				eventTriggered: function () {
-					this.frameIndex = (this.frameIndex + 1) % this.eventFrames.length;
 					var eventInfo = JSON.stringify([].slice.call(arguments));
+                    this.frameIndex = (this.frameIndex + 1) % this.eventFrames.length;
 					if(app.isEmbeddedInApp)
 					{
-						this.eventFrames[this.frameIndex].src = 'event://' + escape(eventInfo);	
+                    	this.eventFrames[this.frameIndex].src = 'event://' + escape(eventInfo);
 					}
 					else
 					{

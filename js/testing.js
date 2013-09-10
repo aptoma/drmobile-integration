@@ -21,34 +21,11 @@ require(['main', 'pages'], function(app, pages){
 
   function init(pagesData){
     pagesList = pagesData;
-    app.event.trigger('renderPage', 
+    app.event.trigger('renderPage',
         pagesList.items[0].compiled.pages[0], pagesList.items[0].service.assetsBaseUrl, '');
-  
+
 
     document.onkeydown=changePageKeyboard;
-
-
-    var gnStartX = 0;
-    var gnStartY = 0;
-    var gnEndX = 0;
-    var gnEndY = 0;
-
-    window.addEventListener('touchstart',function(event) {
-      gnStartX = event.touches[0].pageX;
-      gnStartY = event.touches[0].pageY;
-    },false);
-
-    window.addEventListener('touchmove',function(event) {
-      gnEndX = event.touches[0].pageX;
-      gnEndY = event.touches[0].pageY;
-    },false);
-
-    window.addEventListener('touchend',function(event) {
-      console.log('START (' + gnStartX + ', ' + gnStartY + ')   END (' + gnEndX + ', ' + gnEndY + ')');
-
-      changePageTouch(gnStartY, gnEndY, gnStartX, gnEndX);
-
-    },false);
 
   }
 
@@ -59,7 +36,7 @@ require(['main', 'pages'], function(app, pages){
       console.error('pagesList empty', pagesList);
       return;
     }
-    app.event.trigger('renderPage', 
+    app.event.trigger('renderPage',
         pagesList.items[state.article].compiled.pages[state.page],
         pagesList.items[state.article].service.assetsBaseUrl, '');
   }
@@ -137,7 +114,7 @@ require(['main', 'pages'], function(app, pages){
     }
 
     loadPage(state);
-    
+
   }
 
   function changePageTouch (startY, endY, startX, endX) {

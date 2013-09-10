@@ -50,8 +50,14 @@ define('js/widgets/disqus', ['alf'], function(Alf){
                 console.log('Comments for: ' + shortname + ' ' + query);
 
                 var url = 'http://disqus.com/embed/comments?f='+shortname+'&t_i='+query+'&s_o=default';
-                window.open(url, '_blank');
+                //window.open(url, '_blank');
 
+                //apfenposten://open/site/url/?url=<url>
+                //app.bridge.trigger('displayState', {event:'fullscreenWillAppear'});
+
+                //window.app.bridge.trigger('open/site/url/', {url:url});
+
+                app.event.trigger('closedBrowser', url);
             });
 
             done();

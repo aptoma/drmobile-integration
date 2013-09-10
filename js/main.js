@@ -8,12 +8,19 @@ define('main', ['alf', 'js/widgets/disqus'], function (Alf, disqus) {
 
 	var app = {
 		initialize: function () {
-			this.isEmbeddedInApp = true;
+			this.isEmbeddedInApp = this.getURLParameter('isEmbeddedInApp', '1') == '1';
 			this.page = null;
 			this.event = null;
 			this.bridge = null;
 			this.initBridge();
 			this.initLayers();
+		},
+
+		getURLParameter: function(name, fallbackValue) {
+    		var value = decodeURI(
+        		(RegExp(name + '=' + '(.+?)(&|$)').exec(location.search)||[,null])[1]
+    			);
+    		return value != null ? value : fallbackValue;
 		},
 
 		logToApp: function(data) {
@@ -59,7 +66,15 @@ define('main', ['alf', 'js/widgets/disqus'], function (Alf, disqus) {
 				 */
 				eventTriggered: function () {
 					this.frameIndex = (this.frameIndex + 1) % this.eventFrames.length;
-					this.eventFrames[this.frameIndex].src = 'event://' + escape(JSON.stringify([].slice.call(arguments)));
+					var eventInfo = JSON.stringify([].slice.call(arguments));
+					if(app.isEmbeddedInApp)
+					{
+						this.eventFrames[this.frameIndex].src = 'event://' + escape(eventInfo);	
+					}
+					else
+					{
+						app.logToConsole('Event: ' + eventInfo);
+					}
 				}
 			});
 

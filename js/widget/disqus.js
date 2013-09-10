@@ -13,14 +13,14 @@ define('js/widgets/disqus', ['alf'], function(Alf){
             var query = $this.attr('data-query');
             $this.text('Kommentarer');
 
-            $this.click(function(){
-
+            function openComments(){
                 console.log('Comments for: ' + shortname + ' ' + query);
-
                 var url = 'http://disqus.com/embed/comments?f='+shortname+'&t_i='+query+'&s_o=default';
-
                 app.event.trigger('closedBrowser', url);
-            });
+            }
+
+            $this.click(openComments);
+            $this.tap(openComments);
 
             done();
         }

@@ -58,7 +58,8 @@ define('main', ['alf', 'js/widgets/disqus'], function (Alf, disqus) {
 				 * @return {void}
 				 */
 				eventTriggered: function () {
-					this.frameIndex = (this.frameIndex + 1) % this.eventFrames.length;
+					this.frameIndex++;
+                              this.frameIndex = this.frameIndex % this.eventFrames.length;
 					this.eventFrames[this.frameIndex].src = 'event://' + escape(JSON.stringify([].slice.call(arguments)));
 				}
 			});
@@ -157,11 +158,6 @@ define('main', ['alf', 'js/widgets/disqus'], function (Alf, disqus) {
 		app.bridge.trigger('displayState', {event:'fullscreenDidDisappear'});
 	});
 
-	$(document).ready(function () {
-		app.bridge.trigger('integrationLoaded');
-	});
-
-
 	app.event.on('renderPage', function(deskedPage, assetsBaseUrl, contextHash) {
 		var pageContentEl = $('#alf-layer-content');
 
@@ -187,6 +183,10 @@ define('main', ['alf', 'js/widgets/disqus'], function (Alf, disqus) {
 	app.event.on('appstate', function(state) {
 		//app.logToAll('Got appstate: ' + state);
 	});
+
+      $(document).ready(function () {
+        app.bridge.trigger('integrationLoaded');
+      });
 
 	return app;
 

@@ -155,7 +155,7 @@ require(['main', 'pages'], function(app, pages){
     // Article URL. Point this to your DrMobile API endpoint (DrLib)
     var url = 'http://rai-dev.aptoma.no:9000/drmobile.json?formatName=' + formatName
      + '&publicationName=' + publicationName
-     + '&limit=5&order=metaFrontPageOrderValue+desc';
+     + '&limit=20&order=updated+desc';
      //skip    "&callback=?"
 
     pages.get({

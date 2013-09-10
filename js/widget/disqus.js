@@ -11,51 +11,13 @@ define('js/widgets/disqus', ['alf'], function(Alf){
             var $this = this.$el;
             var shortname = $this.attr('shortname');
             var query = $this.attr('data-query');
-            $this.text('Loading comments data.');
-
-            var disqusPublicKey = 'YCex0uNJaklBqFMvHEsdDpzev3uwEA15twKNaohtswM0VJK1DFq2Ise1ttoFsOoz';
-
-            $.ajax({
-                type: 'GET',
-                url: "https://disqus.com/api/3.0/threads/details.jsonp",
-                data: { api_key: disqusPublicKey, forum : shortname, 'thread:ident' : query },
-                cache: false,
-                dataType: 'jsonp',
-                success: function (result) {
-                  console.log(result);
-                  if (result && result.response) {
-
-                    var countText = " Comments";
-                    var count = result.response.posts;
-
-                    console.log(result.response);
-
-                    if (count == 1)
-                      countText = " Comment";
-                    var shotText = 'Show ' + count + countText + '.';
-                    $this.text(shotText)
-
-                  }else {
-                    $this.text('Be first to comment.');
-                  }
-                },
-                error: function(){
-                    $this.text('Be first to comment.');
-                }
-              });
-
+            $this.text('Kommentarer');
 
             $this.click(function(){
 
                 console.log('Comments for: ' + shortname + ' ' + query);
 
                 var url = 'http://disqus.com/embed/comments?f='+shortname+'&t_i='+query+'&s_o=default';
-                //window.open(url, '_blank');
-
-                //apfenposten://open/site/url/?url=<url>
-                //app.bridge.trigger('displayState', {event:'fullscreenWillAppear'});
-
-                //window.app.bridge.trigger('open/site/url/', {url:url});
 
                 app.event.trigger('closedBrowser', url);
             });

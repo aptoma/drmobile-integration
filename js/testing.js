@@ -148,7 +148,7 @@ require(['main', 'pages'], function(app, pages){
   if(onTestPage()){
     console.log('on test page!');
     // The name of the publication in LayoutPreview
-    var publicationName = 'ap_pub_5';
+    var publicationName = 'ap_pub_2';
     // The name of the format you want to use
     var formatName = 'ipad_landscape';
     // Article URL. Point this to your DrMobile API endpoint (DrLib)

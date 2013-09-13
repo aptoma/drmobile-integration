@@ -11,7 +11,7 @@ define('js/widgets/disqus', ['alf'], function(Alf){
             var $this = this.$el;
             var shortname = $this.attr('shortname');
             var query = $this.attr('data-query');
-            $this.text('Kommentarer');
+            //$this.text('Kommentarer');
 
             var treshhold = 100;
             var skip = false;
@@ -22,9 +22,10 @@ define('js/widgets/disqus', ['alf'], function(Alf){
                     return;
                 }
 
-                console.log('Comments for: ' + shortname + ' ' + query);
+                //console.log('Comments for: ' + shortname + ' ' + query);
                 var url = 'http://disqus.com/embed/comments?f='+shortname+'&t_i='+query+'&s_o=default';
                 app.bridge.trigger('closedBrowser', {url: url});
+
                 skip = true;
                 setTimeout(function(){
                     skip = false;
@@ -32,7 +33,6 @@ define('js/widgets/disqus', ['alf'], function(Alf){
 
             }
 
-            $this.click(openComments);
             $this.tap(openComments);
 
             done();

@@ -1,17 +1,17 @@
-/* line 1, /Users/peter/Web/aptoma/no.aptoma.alf/src/sass/layout/_base.scss */
+/* line 1, /Users/peter/Web/aptoma/alf/src/sass/layout/_base.scss */
 body {
   margin: 0;
   padding: 0;
 }
 
-/* line 6, /Users/peter/Web/aptoma/no.aptoma.alf/src/sass/layout/_base.scss */
+/* line 6, /Users/peter/Web/aptoma/alf/src/sass/layout/_base.scss */
 .no-margin {
   margin: 0 !important;
   padding: 0 !important;
 }
 
-/* line 11, /Users/peter/Web/aptoma/no.aptoma.alf/src/sass/layout/_base.scss */
-.chrome {
+/* line 11, /Users/peter/Web/aptoma/alf/src/sass/layout/_base.scss */
+.alf-chrome {
   position: absolute;
   top: 0;
   right: 0;
@@ -19,40 +19,40 @@ body {
   left: 0;
 }
 
-/* line 19, /Users/peter/Web/aptoma/no.aptoma.alf/src/sass/layout/_base.scss */
+/* line 19, /Users/peter/Web/aptoma/alf/src/sass/layout/_base.scss */
 .alf-is-moving {
   z-index: 2147483647 !important;
 }
 
-/* line 23, /Users/peter/Web/aptoma/no.aptoma.alf/src/sass/layout/_base.scss */
+/* line 23, /Users/peter/Web/aptoma/alf/src/sass/layout/_base.scss */
 .alf-container {
   box-sizing: border-box;
 }
 
-/* line 28, /Users/peter/Web/aptoma/no.aptoma.alf/src/sass/layout/_base.scss */
+/* line 28, /Users/peter/Web/aptoma/alf/src/sass/layout/_base.scss */
 .alf-container:before,
 .alf-container:after {
   content: " ";
   display: table;
 }
 
-/* line 33, /Users/peter/Web/aptoma/no.aptoma.alf/src/sass/layout/_base.scss */
+/* line 33, /Users/peter/Web/aptoma/alf/src/sass/layout/_base.scss */
 .alf-is-responsive .alf-container img {
   max-width: 100%;
   height: auto;
 }
 
-/* line 38, /Users/peter/Web/aptoma/no.aptoma.alf/src/sass/layout/_base.scss */
-.alf-container-fullscreen {
+/* line 38, /Users/peter/Web/aptoma/alf/src/sass/layout/_base.scss */
+.alf-container-fullscreen:not(.alf-is-visible) {
   display: none;
 }
 
-/* line 42, /Users/peter/Web/aptoma/no.aptoma.alf/src/sass/layout/_base.scss */
+/* line 42, /Users/peter/Web/aptoma/alf/src/sass/layout/_base.scss */
 .alf-container-is-unloaded {
   visibility: hidden !important;
 }
 
-/* line 47, /Users/peter/Web/aptoma/no.aptoma.alf/src/sass/layout/_base.scss */
+/* line 47, /Users/peter/Web/aptoma/alf/src/sass/layout/_base.scss */
 .alf-is-scrollable-x,
 .alf-is-scrollable-y {
   -webkit-overflow-scrolling: touch;
@@ -62,32 +62,32 @@ body {
   overflow-scrolling: touch;
 }
 
-/* line 55, /Users/peter/Web/aptoma/no.aptoma.alf/src/sass/layout/_base.scss */
+/* line 55, /Users/peter/Web/aptoma/alf/src/sass/layout/_base.scss */
 .alf-is-scrollable-x {
   overflow-x: auto;
   overflow-y: hidden;
 }
 
-/* line 60, /Users/peter/Web/aptoma/no.aptoma.alf/src/sass/layout/_base.scss */
+/* line 60, /Users/peter/Web/aptoma/alf/src/sass/layout/_base.scss */
 .alf-is-scrollable-y {
   overflow-x: hidden;
   overflow-y: auto;
 }
 
-/* line 65, /Users/peter/Web/aptoma/no.aptoma.alf/src/sass/layout/_base.scss */
+/* line 65, /Users/peter/Web/aptoma/alf/src/sass/layout/_base.scss */
 .alf-is-scrollable-x.alf-is-scrollable-y {
   overflow-y: auto;
   overflow-x: auto;
   overflow: auto;
 }
 
-/* line 1, /Users/peter/Web/aptoma/no.aptoma.alf/src/sass/modules/_grid.scss */
+/* line 1, /Users/peter/Web/aptoma/alf/src/sass/modules/_grid.scss */
 .no-margin {
   margin: 0 !important;
   padding: 0 !important;
 }
 
-/* line 6, /Users/peter/Web/aptoma/no.aptoma.alf/src/sass/modules/_grid.scss */
+/* line 6, /Users/peter/Web/aptoma/alf/src/sass/modules/_grid.scss */
 .grid {
   position: absolute;
   top: 55px;
@@ -96,7 +96,7 @@ body {
   right: 35px;
 }
 
-/* line 14, /Users/peter/Web/aptoma/no.aptoma.alf/src/sass/modules/_grid.scss */
+/* line 14, /Users/peter/Web/aptoma/alf/src/sass/modules/_grid.scss */
 .grid-fill {
   top: 0;
   left: 0;
@@ -104,7 +104,7 @@ body {
   right: 0;
 }
 
-/* line 21, /Users/peter/Web/aptoma/no.aptoma.alf/src/sass/modules/_grid.scss */
+/* line 21, /Users/peter/Web/aptoma/alf/src/sass/modules/_grid.scss */
 [class*=col-] {
   position: absolute;
   top: 0;
@@ -112,82 +112,82 @@ body {
   width: 460px;
 }
 
-/* line 28, /Users/peter/Web/aptoma/no.aptoma.alf/src/sass/modules/_grid.scss */
+/* line 28, /Users/peter/Web/aptoma/alf/src/sass/modules/_grid.scss */
 .col-1 {
   left: 0px;
 }
 
-/* line 32, /Users/peter/Web/aptoma/no.aptoma.alf/src/sass/modules/_grid.scss */
+/* line 32, /Users/peter/Web/aptoma/alf/src/sass/modules/_grid.scss */
 .col-2 {
   left: 494px;
 }
 
-/* line 36, /Users/peter/Web/aptoma/no.aptoma.alf/src/sass/modules/_grid.scss */
+/* line 36, /Users/peter/Web/aptoma/alf/src/sass/modules/_grid.scss */
 .col-3 {
   left: 988px;
 }
 
-/* line 40, /Users/peter/Web/aptoma/no.aptoma.alf/src/sass/modules/_grid.scss */
+/* line 40, /Users/peter/Web/aptoma/alf/src/sass/modules/_grid.scss */
 .col-4 {
   left: 1482px;
 }
 
-/* line 44, /Users/peter/Web/aptoma/no.aptoma.alf/src/sass/modules/_grid.scss */
+/* line 44, /Users/peter/Web/aptoma/alf/src/sass/modules/_grid.scss */
 .col-5 {
   left: 1976px;
 }
 
-/* line 48, /Users/peter/Web/aptoma/no.aptoma.alf/src/sass/modules/_grid.scss */
+/* line 48, /Users/peter/Web/aptoma/alf/src/sass/modules/_grid.scss */
 .cols-1 {
   width: 460px;
 }
 
-/* line 52, /Users/peter/Web/aptoma/no.aptoma.alf/src/sass/modules/_grid.scss */
+/* line 52, /Users/peter/Web/aptoma/alf/src/sass/modules/_grid.scss */
 .cols-2 {
   width: 954px;
 }
 
-/* line 56, /Users/peter/Web/aptoma/no.aptoma.alf/src/sass/modules/_grid.scss */
+/* line 56, /Users/peter/Web/aptoma/alf/src/sass/modules/_grid.scss */
 .cols-3 {
   width: 1448px;
 }
 
-/* line 60, /Users/peter/Web/aptoma/no.aptoma.alf/src/sass/modules/_grid.scss */
+/* line 60, /Users/peter/Web/aptoma/alf/src/sass/modules/_grid.scss */
 .cols-4 {
   width: 1942px;
 }
 
-/* line 64, /Users/peter/Web/aptoma/no.aptoma.alf/src/sass/modules/_grid.scss */
+/* line 64, /Users/peter/Web/aptoma/alf/src/sass/modules/_grid.scss */
 .cols-5 {
   width: 2436px;
 }
 
-/* line 68, /Users/peter/Web/aptoma/no.aptoma.alf/src/sass/modules/_grid.scss */
+/* line 68, /Users/peter/Web/aptoma/alf/src/sass/modules/_grid.scss */
 .colspan-1 {
   width: 460px;
 }
 
-/* line 72, /Users/peter/Web/aptoma/no.aptoma.alf/src/sass/modules/_grid.scss */
+/* line 72, /Users/peter/Web/aptoma/alf/src/sass/modules/_grid.scss */
 .colspan-2 {
   width: 954px;
 }
 
-/* line 76, /Users/peter/Web/aptoma/no.aptoma.alf/src/sass/modules/_grid.scss */
+/* line 76, /Users/peter/Web/aptoma/alf/src/sass/modules/_grid.scss */
 .colspan-3 {
   width: 1448px;
 }
 
-/* line 80, /Users/peter/Web/aptoma/no.aptoma.alf/src/sass/modules/_grid.scss */
+/* line 80, /Users/peter/Web/aptoma/alf/src/sass/modules/_grid.scss */
 .colspan-4 {
   width: 1942px;
 }
 
-/* line 84, /Users/peter/Web/aptoma/no.aptoma.alf/src/sass/modules/_grid.scss */
+/* line 84, /Users/peter/Web/aptoma/alf/src/sass/modules/_grid.scss */
 .colspan-5 {
   width: 2436px;
 }
 
-/* line 1, /Users/peter/Web/aptoma/no.aptoma.alf/src/sass/modules/_layer.scss */
+/* line 1, /Users/peter/Web/aptoma/alf/src/sass/modules/_layer.scss */
 .alf-layer {
   position: absolute;
   top: 0;
@@ -199,27 +199,27 @@ body {
   transform-origin: 50% 50%;
 }
 
-/* line 12, /Users/peter/Web/aptoma/no.aptoma.alf/src/sass/modules/_layer.scss */
+/* line 12, /Users/peter/Web/aptoma/alf/src/sass/modules/_layer.scss */
 .alf-layer-1 {
   z-index: 1;
 }
 
-/* line 16, /Users/peter/Web/aptoma/no.aptoma.alf/src/sass/modules/_layer.scss */
+/* line 16, /Users/peter/Web/aptoma/alf/src/sass/modules/_layer.scss */
 .alf-layer-2 {
   z-index: 2;
 }
 
-/* line 20, /Users/peter/Web/aptoma/no.aptoma.alf/src/sass/modules/_layer.scss */
+/* line 20, /Users/peter/Web/aptoma/alf/src/sass/modules/_layer.scss */
 .alf-layer-2 .alf-pages {
   top: 0;
 }
 
-/* line 24, /Users/peter/Web/aptoma/no.aptoma.alf/src/sass/modules/_layer.scss */
+/* line 24, /Users/peter/Web/aptoma/alf/src/sass/modules/_layer.scss */
 .alf-layer-3 {
   z-index: 3;
 }
 
-/* line 28, /Users/peter/Web/aptoma/no.aptoma.alf/src/sass/modules/_layer.scss */
+/* line 28, /Users/peter/Web/aptoma/alf/src/sass/modules/_layer.scss */
 .alf-layer-fullscreen {
   display: -moz-box;
   display: -webkit-box;
@@ -230,7 +230,7 @@ body {
   -ms-box-align: center;
 }
 
-/* line 38, /Users/peter/Web/aptoma/no.aptoma.alf/src/sass/modules/_layer.scss */
+/* line 38, /Users/peter/Web/aptoma/alf/src/sass/modules/_layer.scss */
 .alf-fullscreen-content {
   position: absolute;
   top: 0;
@@ -239,7 +239,7 @@ body {
   left: 0;
 }
 
-/* line 46, /Users/peter/Web/aptoma/no.aptoma.alf/src/sass/modules/_layer.scss */
+/* line 46, /Users/peter/Web/aptoma/alf/src/sass/modules/_layer.scss */
 .alf-fullscreen-toolbar {
   position: absolute;
   top: 0;
@@ -251,7 +251,7 @@ body {
   padding: 10px;
   box-sizing: border-box;
 }
-/* line 58, /Users/peter/Web/aptoma/no.aptoma.alf/src/sass/modules/_layer.scss */
+/* line 58, /Users/peter/Web/aptoma/alf/src/sass/modules/_layer.scss */
 .alf-fullscreen-toolbar a,
 .alf-fullscreen-toolbar button {
   display: inline-block;
@@ -262,13 +262,13 @@ body {
   -webkit-appearance: button;
 }
 
-/* line 68, /Users/peter/Web/aptoma/no.aptoma.alf/src/sass/modules/_layer.scss */
+/* line 68, /Users/peter/Web/aptoma/alf/src/sass/modules/_layer.scss */
 .alf-fullscreen-exit:before {
   content: 'Lukk';
   padding: 10px;
 }
 
-/* line 4, /Users/peter/Web/aptoma/no.aptoma.alf/src/sass/modules/_nav.scss */
+/* line 4, /Users/peter/Web/aptoma/alf/src/sass/modules/_nav.scss */
 .alf-pages {
   position: absolute;
   top: 0;
@@ -291,7 +291,7 @@ body {
   transform: translate3d(0, 0, 0);
 }
 
-/* line 15, /Users/peter/Web/aptoma/no.aptoma.alf/src/sass/modules/_nav.scss */
+/* line 15, /Users/peter/Web/aptoma/alf/src/sass/modules/_nav.scss */
 .alf-page-loader {
   -webkit-transition: opacity ease-out 200ms;
   -moz-transition: opacity ease-out 200ms;
@@ -309,7 +309,7 @@ body {
   -webkit-box-align: center;
 }
 
-/* line 32, /Users/peter/Web/aptoma/no.aptoma.alf/src/sass/modules/_nav.scss */
+/* line 32, /Users/peter/Web/aptoma/alf/src/sass/modules/_nav.scss */
 .alf-page-loader:before {
   content: "Laster..";
   font-family: Helvetica, Arial;
@@ -318,7 +318,7 @@ body {
   display: block;
 }
 
-/* line 40, /Users/peter/Web/aptoma/no.aptoma.alf/src/sass/modules/_nav.scss */
+/* line 40, /Users/peter/Web/aptoma/alf/src/sass/modules/_nav.scss */
 .swiper-page-is-loading {
   -webkit-transition-duration: 0;
   -moz-transition-duration: 0;
@@ -327,7 +327,7 @@ body {
   -webkit-transform: translate3d(0, 0, 0);
 }
 
-/* line 48, /Users/peter/Web/aptoma/no.aptoma.alf/src/sass/modules/_nav.scss */
+/* line 48, /Users/peter/Web/aptoma/alf/src/sass/modules/_nav.scss */
 .alf-page {
   z-index: 1;
   position: absolute;
@@ -337,7 +337,7 @@ body {
   right: 0;
 }
 
-/* line 57, /Users/peter/Web/aptoma/no.aptoma.alf/src/sass/modules/_nav.scss */
+/* line 57, /Users/peter/Web/aptoma/alf/src/sass/modules/_nav.scss */
 .alf-page > section {
   position: absolute;
   top: 0;
@@ -346,20 +346,20 @@ body {
   left: 0;
 }
 
-/* line 65, /Users/peter/Web/aptoma/no.aptoma.alf/src/sass/modules/_nav.scss */
+/* line 65, /Users/peter/Web/aptoma/alf/src/sass/modules/_nav.scss */
 .alf-page-content {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
 }
 
-/* line 75, /Users/peter/Web/aptoma/no.aptoma.alf/src/sass/modules/_nav.scss */
+/* line 75, /Users/peter/Web/aptoma/alf/src/sass/modules/_nav.scss */
 .is-scrollable {
   overflow: auto;
   -webkit-overflow-scrolling: touch;
 }
 
-/* line 81, /Users/peter/Web/aptoma/no.aptoma.alf/src/sass/modules/_nav.scss */
+/* line 81, /Users/peter/Web/aptoma/alf/src/sass/modules/_nav.scss */
 .alf-page-1 {
   -webkit-transform: translate(0%, 0);
   -moz-transform: translate(0%, 0);
@@ -368,7 +368,7 @@ body {
   transform: translate(0%, 0);
 }
 
-/* line 81, /Users/peter/Web/aptoma/no.aptoma.alf/src/sass/modules/_nav.scss */
+/* line 81, /Users/peter/Web/aptoma/alf/src/sass/modules/_nav.scss */
 .alf-page-2 {
   -webkit-transform: translate(100%, 0);
   -moz-transform: translate(100%, 0);
@@ -377,7 +377,7 @@ body {
   transform: translate(100%, 0);
 }
 
-/* line 81, /Users/peter/Web/aptoma/no.aptoma.alf/src/sass/modules/_nav.scss */
+/* line 81, /Users/peter/Web/aptoma/alf/src/sass/modules/_nav.scss */
 .alf-page-3 {
   -webkit-transform: translate(200%, 0);
   -moz-transform: translate(200%, 0);
@@ -386,7 +386,7 @@ body {
   transform: translate(200%, 0);
 }
 
-/* line 81, /Users/peter/Web/aptoma/no.aptoma.alf/src/sass/modules/_nav.scss */
+/* line 81, /Users/peter/Web/aptoma/alf/src/sass/modules/_nav.scss */
 .alf-page-4 {
   -webkit-transform: translate(300%, 0);
   -moz-transform: translate(300%, 0);
@@ -395,7 +395,7 @@ body {
   transform: translate(300%, 0);
 }
 
-/* line 81, /Users/peter/Web/aptoma/no.aptoma.alf/src/sass/modules/_nav.scss */
+/* line 81, /Users/peter/Web/aptoma/alf/src/sass/modules/_nav.scss */
 .alf-page-5 {
   -webkit-transform: translate(400%, 0);
   -moz-transform: translate(400%, 0);
@@ -404,7 +404,7 @@ body {
   transform: translate(400%, 0);
 }
 
-/* line 81, /Users/peter/Web/aptoma/no.aptoma.alf/src/sass/modules/_nav.scss */
+/* line 81, /Users/peter/Web/aptoma/alf/src/sass/modules/_nav.scss */
 .alf-page-6 {
   -webkit-transform: translate(500%, 0);
   -moz-transform: translate(500%, 0);
@@ -413,7 +413,7 @@ body {
   transform: translate(500%, 0);
 }
 
-/* line 81, /Users/peter/Web/aptoma/no.aptoma.alf/src/sass/modules/_nav.scss */
+/* line 81, /Users/peter/Web/aptoma/alf/src/sass/modules/_nav.scss */
 .alf-page-7 {
   -webkit-transform: translate(600%, 0);
   -moz-transform: translate(600%, 0);
@@ -422,7 +422,7 @@ body {
   transform: translate(600%, 0);
 }
 
-/* line 81, /Users/peter/Web/aptoma/no.aptoma.alf/src/sass/modules/_nav.scss */
+/* line 81, /Users/peter/Web/aptoma/alf/src/sass/modules/_nav.scss */
 .alf-page-8 {
   -webkit-transform: translate(700%, 0);
   -moz-transform: translate(700%, 0);
@@ -431,7 +431,7 @@ body {
   transform: translate(700%, 0);
 }
 
-/* line 81, /Users/peter/Web/aptoma/no.aptoma.alf/src/sass/modules/_nav.scss */
+/* line 81, /Users/peter/Web/aptoma/alf/src/sass/modules/_nav.scss */
 .alf-page-9 {
   -webkit-transform: translate(800%, 0);
   -moz-transform: translate(800%, 0);
@@ -440,7 +440,7 @@ body {
   transform: translate(800%, 0);
 }
 
-/* line 81, /Users/peter/Web/aptoma/no.aptoma.alf/src/sass/modules/_nav.scss */
+/* line 81, /Users/peter/Web/aptoma/alf/src/sass/modules/_nav.scss */
 .alf-page-10 {
   -webkit-transform: translate(900%, 0);
   -moz-transform: translate(900%, 0);
@@ -449,7 +449,7 @@ body {
   transform: translate(900%, 0);
 }
 
-/* line 81, /Users/peter/Web/aptoma/no.aptoma.alf/src/sass/modules/_nav.scss */
+/* line 81, /Users/peter/Web/aptoma/alf/src/sass/modules/_nav.scss */
 .alf-page-11 {
   -webkit-transform: translate(1000%, 0);
   -moz-transform: translate(1000%, 0);
@@ -458,7 +458,7 @@ body {
   transform: translate(1000%, 0);
 }
 
-/* line 81, /Users/peter/Web/aptoma/no.aptoma.alf/src/sass/modules/_nav.scss */
+/* line 81, /Users/peter/Web/aptoma/alf/src/sass/modules/_nav.scss */
 .alf-page-12 {
   -webkit-transform: translate(1100%, 0);
   -moz-transform: translate(1100%, 0);
@@ -467,7 +467,7 @@ body {
   transform: translate(1100%, 0);
 }
 
-/* line 81, /Users/peter/Web/aptoma/no.aptoma.alf/src/sass/modules/_nav.scss */
+/* line 81, /Users/peter/Web/aptoma/alf/src/sass/modules/_nav.scss */
 .alf-page-13 {
   -webkit-transform: translate(1200%, 0);
   -moz-transform: translate(1200%, 0);
@@ -476,7 +476,7 @@ body {
   transform: translate(1200%, 0);
 }
 
-/* line 81, /Users/peter/Web/aptoma/no.aptoma.alf/src/sass/modules/_nav.scss */
+/* line 81, /Users/peter/Web/aptoma/alf/src/sass/modules/_nav.scss */
 .alf-page-14 {
   -webkit-transform: translate(1300%, 0);
   -moz-transform: translate(1300%, 0);
@@ -485,7 +485,7 @@ body {
   transform: translate(1300%, 0);
 }
 
-/* line 81, /Users/peter/Web/aptoma/no.aptoma.alf/src/sass/modules/_nav.scss */
+/* line 81, /Users/peter/Web/aptoma/alf/src/sass/modules/_nav.scss */
 .alf-page-15 {
   -webkit-transform: translate(1400%, 0);
   -moz-transform: translate(1400%, 0);
@@ -494,7 +494,7 @@ body {
   transform: translate(1400%, 0);
 }
 
-/* line 81, /Users/peter/Web/aptoma/no.aptoma.alf/src/sass/modules/_nav.scss */
+/* line 81, /Users/peter/Web/aptoma/alf/src/sass/modules/_nav.scss */
 .alf-page-16 {
   -webkit-transform: translate(1500%, 0);
   -moz-transform: translate(1500%, 0);
@@ -503,7 +503,7 @@ body {
   transform: translate(1500%, 0);
 }
 
-/* line 81, /Users/peter/Web/aptoma/no.aptoma.alf/src/sass/modules/_nav.scss */
+/* line 81, /Users/peter/Web/aptoma/alf/src/sass/modules/_nav.scss */
 .alf-page-17 {
   -webkit-transform: translate(1600%, 0);
   -moz-transform: translate(1600%, 0);
@@ -512,7 +512,7 @@ body {
   transform: translate(1600%, 0);
 }
 
-/* line 81, /Users/peter/Web/aptoma/no.aptoma.alf/src/sass/modules/_nav.scss */
+/* line 81, /Users/peter/Web/aptoma/alf/src/sass/modules/_nav.scss */
 .alf-page-18 {
   -webkit-transform: translate(1700%, 0);
   -moz-transform: translate(1700%, 0);
@@ -521,7 +521,7 @@ body {
   transform: translate(1700%, 0);
 }
 
-/* line 81, /Users/peter/Web/aptoma/no.aptoma.alf/src/sass/modules/_nav.scss */
+/* line 81, /Users/peter/Web/aptoma/alf/src/sass/modules/_nav.scss */
 .alf-page-19 {
   -webkit-transform: translate(1800%, 0);
   -moz-transform: translate(1800%, 0);
@@ -530,7 +530,7 @@ body {
   transform: translate(1800%, 0);
 }
 
-/* line 81, /Users/peter/Web/aptoma/no.aptoma.alf/src/sass/modules/_nav.scss */
+/* line 81, /Users/peter/Web/aptoma/alf/src/sass/modules/_nav.scss */
 .alf-page-20 {
   -webkit-transform: translate(1900%, 0);
   -moz-transform: translate(1900%, 0);
@@ -539,7 +539,7 @@ body {
   transform: translate(1900%, 0);
 }
 
-/* line 1, /Users/peter/Web/aptoma/no.aptoma.alf/src/sass/modules/_slideshow.scss */
+/* line 1, /Users/peter/Web/aptoma/alf/src/sass/modules/_slideshow.scss */
 .alf-slideshow .alf-page-content {
   display: -webkit-box;
   display: -moz-box;
@@ -552,14 +552,23 @@ body {
   box-align: center;
 }
 
-/* line 1, /Users/peter/Web/aptoma/no.aptoma.alf/src/sass/partials/_state.scss */
-.is-hidden {
+/* line 1, /Users/peter/Web/aptoma/alf/src/sass/partials/_state.scss */
+.alf-is-not-displayed {
+  display: none;
+}
+
+/* line 5, /Users/peter/Web/aptoma/alf/src/sass/partials/_state.scss */
+.alf-is-hidden {
   opacity: 0 !important;
   pointer-events: none;
 }
+/* line 9, /Users/peter/Web/aptoma/alf/src/sass/partials/_state.scss */
+.alf-is-hidden .alf-is-visible {
+  pointer-events: none;
+}
 
-/* line 6, /Users/peter/Web/aptoma/no.aptoma.alf/src/sass/partials/_state.scss */
-.is-visible {
+/* line 14, /Users/peter/Web/aptoma/alf/src/sass/partials/_state.scss */
+.alf-is-visible {
   opacity: 1;
   pointer-events: auto;
 }

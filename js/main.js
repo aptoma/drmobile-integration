@@ -208,9 +208,9 @@ define('main', ['alf', 'js/widgets/disqus'], function (Alf, disqus) {
 		//app.logToAll('Got appstate: ' + state);
 	});
 
-      $(document).ready(function () {
-        app.bridge.trigger('integrationLoaded');
-      });
+  $(document).ready(function () {
+    app.bridge.trigger('integrationLoaded');
+  });
 
 	return app;
 

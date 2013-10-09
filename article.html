@@ -46,7 +46,12 @@
 
         PageCollection = Backbone.Collection.extend({
             url: function () {
-                return 'http://rai-dev.aptoma.no:9000/drmobile.json?order=updated+desc&formatName=ipad_landscape&publicationName=' + window.app.publication + '&callback=?';
+                var publication, format;
+
+                publication = window.app.publication;
+                format = window.app.format;
+
+                return 'http://rai-dev.aptoma.no:9000/drmobile.json?order=updated+desc&formatName=' + format + '&publicationName=' + publication + '&callback=?';
             },
 
             parse: function (response) {
@@ -87,20 +92,21 @@
 
         Router = Backbone.Router.extend({
             routes: {
-                ':publication': 'loadPages',
+                ':publication(/:format)': 'loadPages',
             },
 
-            loadPages: function (publication) {
+            loadPages: function (publication, format) {
                 var that = this;
 
                 this.publication = publication;
+                this.format = format || 'ipad_landscape';
 
                 clearInterval(this.intervalId);
 
                 this.pages.fetch({update: true});
                 this.intervalId = setInterval(function () {
                     that.pages.fetch({update: true});
-                }, 5000);
+                }, 10000);
             },
 
             initialize: function () {

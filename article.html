@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, target-densitydpi=medium-dpi" >
+    <meta name="apple-mobile-web-app-capable" content="yes" >
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" >
+    <meta name="format-detection" content="telephone=no" >
+    <meta name="HandheldFriendly" content="true">
+    <meta name="apple-touch-fullscreen" content="yes" />
+    <title>DrMobile integration example</title>
+    <link rel="stylesheet" type="text/css" href="vendor/aptoma/alf/alf.css">
+    <link rel="apple-touch-icon-precomposed" href="gfx/appicon.png"/>
+</head>
+<body>
+
+<div class="alf-chrome" id="chrome">
+    <div class="alf-layer alf-layer-1 alf-layer-page" id="alf-layer-1">
+        <div class="alf-pages">
+            <div class="alf-page alf-page-1">
+                <section class="alf-page-loader swiper-page-is-loading"></section>
+                <section class="alf-page-content alf-is-scrollable-y"></section>
+            </div>
+            <div class="alf-page alf-page-2">
+                <section class="alf-page-loader swiper-page-is-loading"></section>
+                <section class="alf-page-content alf-is-scrollable-y"></section>
+            </div>
+            <div class="alf-page alf-page-3">
+                <section class="alf-page-loader swiper-page-is-loading"></section>
+                <section class="alf-page-content alf-is-scrollable-y"></section>
+            </div>
+        </div>
+    </div>
+    <div class="alf-layer alf-layer-2 alf-layer-fullscreen alf-is-hidden" id="alf-layer-2"></div>
+</div>
+
+<script type="text/javascript" src="vendor/aptoma/alf/alf.min.js"></script>
+<script type="text/javascript">
+    require(['alf'], function (Alf) {
+        var Backbone = require('backbone'),
+            _ = Alf._,
+            PageCollection,
+            Router,
+            publication,
+            source;
+
+        PageCollection = Backbone.Collection.extend({
+            url: function () {
+                return 'http://rai-dev.aptoma.no:9000/drmobile.json?order=updated+desc&formatName=ipad_landscape&publicationName=' + window.app.publication + '&callback=?';
+            },
+
+            parse: function (response) {
+                // Convert all article-pages into a flat array of pages
+                var pages = _.map(response.items, function (item, i) {
+                    return _.map(item.compiled.pages, function (page, j) {
+                        return {
+                            id: item.meta.id + '_' + j,
+                            articleNum: i,
+                            pageNum: j,
+                            compiled: JSON.stringify(page)
+                        }
+                    });
+                });
+
+                this.assetsBaseUrl = response.items[0].service.assetsBaseUrl;
+
+                return _.flatten(pages);
+            },
+
+            comparator: function (a, b) {
+                var articleNumA, articleNumB, pageNumA, pageNumB;
+
+                articleNumA = a.get('articleNum');
+                articleNumB = b.get('articleNum');
+                pageNumA = a.get('pageNum');
+                pageNumB = b.get('pageNum');
+
+                if (articleNumA === articleNumB) {
+                    return pageNumA > pageNumB ? 1 : -1;
+                } else if (articleNumA > articleNumB) {
+                    return 1;
+                } else {
+                    return -1;
+                }
+            }
+        });
+
+        Router = Backbone.Router.extend({
+            routes: {
+                ':publication': 'loadPages',
+            },
+
+            loadPages: function (publication) {
+                var that = this;
+
+                this.publication = publication;
+
+                clearInterval(this.intervalId);
+
+                this.pages.fetch({update: true});
+                this.intervalId = setInterval(function () {
+                    that.pages.fetch({update: true});
+                }, 5000);
+            },
+
+            initialize: function () {
+                var that = this;
+
+                _.bindAll(this, 'updateScrollView');
+
+                this.renderedPages = {};
+
+                this.pages = new PageCollection();
+                this.pages.on('change add remove', this.updateScrollView, this);
+
+                this.initLayers();
+            },
+
+            /**
+             * Initialize layers
+             *
+             * This is to enable fullscreen support
+             * The article/pages and fullscreen elements are rendered in different "layers"
+             *
+             * @return {void}
+             */
+            initLayers: function () {
+                this.layerManager = new Alf.layer.Manager();
+
+                this.pageLayer = new Alf.layer.Page({
+                    el: '#alf-layer-1',
+                    manager: this.layerManager
+                });
+
+                this.fullscreenLayer = new Alf.layer.Fullscreen({
+                    el: '#alf-layer-2',
+                    manager: this.layerManager
+                });
+
+                this.pageLayer.render();
+                this.fullscreenLayer.render();
+            },
+
+            /**
+             * Initialize the scroll view
+             *
+             * This is only needed if you want HTML-navigation
+             *
+             * @return {void}
+             */
+            updateScrollView: function () {
+                var that = this;
+
+                if (this.scrollView) {
+                    this.scrollView.reset({
+                        numberOfPages: this.pages.length
+                    });
+                    return;
+                }
+
+                this.scrollView = new Alf.nav.ScrollView($('#alf-layer-1').get(0), {
+                    numberOfPages: this.pages.length,
+                    overflowScrolling: true
+                });
+
+                this.scrollView.on('pageWillRender', function (el, pageNum) {
+                    that.renderPage(el, pageNum);
+                });
+
+                /**
+                 * This will make sure there are no memory leaks when pages are removed
+                 */
+                this.scrollView.on('pageWillDestruct', function (el, pageNum) {
+                    that.renderedPages[pageNum] && that.renderedPages[pageNum].tearDown();
+                    delete that.renderedPages[pageNum];
+                });
+
+                this.scrollView.start();
+            },
+
+            /**
+             * Render the page on screen
+             *
+             * Takes the compiled content and uses Alf.layout.Page to do rendering
+             *
+             * @param {HTMLElement} el the element to put the page inside
+             * @param {number} pageNum the page number
+             * @return {void}
+             */
+            renderPage: function (el, pageNum) {
+                var page;
+
+                this.renderedPages[pageNum] = page = new Alf.layout.Page({
+                    layer: this.pageLayer,
+                    assetsBaseUrl: this.pages.assetsBaseUrl
+                });
+
+                page.decompile(this.pages.at(pageNum).get('compiled'), function () {
+                    page.render(el);
+                    page.play();
+                });
+            }
+        });
+
+        window.app = new Router();
+
+        Backbone.history.start();
+    });
+
+</script>
+
+</body>
+</html>

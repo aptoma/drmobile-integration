@@ -135,7 +135,11 @@ define('main', ['alf', 'js/widgets/disqus'], function (Alf, disqus) {
 			}
 
 			var page;
+			//TODO: remove after aptoma fix
+			var pixelDensity = parseInt(window.devicePixelRatio || 1, 10) >= 2? 2 : 1;
+
 			this.page = page = new Alf.layout.Page({
+				pixelRatio: pixelDensity,
 				layer: this.pageLayer,
 				widgets: widgets,
 				assetsBaseUrl: assetsBaseUrl

@@ -2,27 +2,29 @@
 <html>
 <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, target-densitydpi=medium-dpi" >
-    <meta name="apple-mobile-web-app-capable" content="yes" >
-    <meta name="apple-mobile-web-app-status-bar-style" content="black" >
-    <meta name="format-detection" content="telephone=no" >
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, target-densitydpi=medium-dpi">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
     <meta name="HandheldFriendly" content="true">
-    <meta name="apple-touch-fullscreen" content="yes" />
+    <meta name="apple-touch-fullscreen" content="yes"/>
     <title>DrMobile integration example</title>
-    <link rel="stylesheet" type="text/css" href="vendor/aptoma/alf/alf.css">
+    <link rel="stylesheet" type="text/css" href="bower_components/aptoma-alf/alf.css">
     <link rel="apple-touch-icon-precomposed" href="gfx/appicon.png"/>
     <style>
-    body,
-    .alf-chrome,
-    .alf-layer-page,
-    .alf-page,
-    .alf-page-content {
-        overflow: hidden !important;
-    }
-    .alf-page-content {
-        overflow-x: hidden !important;
-        overflow-y: scroll !important;
-    }
+        body,
+        .alf-chrome,
+        .alf-layer-page,
+        .alf-page,
+        .alf-page-content {
+            overflow: hidden !important;
+        }
+
+        .alf-page-content {
+            overflow-x: hidden !important;
+            overflow-y: scroll !important;
+        }
     </style>
 </head>
 <body>
@@ -47,24 +49,24 @@
     <div class="alf-layer alf-layer-2 alf-layer-fullscreen alf-is-hidden" id="alf-layer-2"></div>
 </div>
 
-<script type="text/javascript" src="vendor/aptoma/alf/alf.min.js"></script>
-<script type="text/javascript">
+<script src="bower_components/aptoma-alf/alf.js"></script>
+<script>
+    var drlibBaseUrl = 'https://demo.drlib.aptoma.no/layouts';
     require(['alf'], function (Alf) {
         var Backbone = require('backbone'),
             _ = Alf._,
             PageCollection,
-            Router,
-            publication,
-            source;
+            Router;
 
         PageCollection = Backbone.Collection.extend({
             url: function () {
-                var publication, format;
+                var publication, format, drlibApiKey;
 
                 publication = window.app.publication;
                 format = window.app.format;
+                drlibApiKey = window.app.apikey;
 
-                return 'http://rai-dev.aptoma.no:9000/drmobile.json?order=updated+desc&formatName=' + format + '&publicationName=' + publication + '&callback=?';
+                return drlibBaseUrl + '.json?order=updated+desc&formatName=' + format + '&publicationName=' + publication + '&apikey=' + drlibApiKey + '&callback=?';
             },
 
             parse: function (response) {
@@ -105,14 +107,15 @@
 
         Router = Backbone.Router.extend({
             routes: {
-                ':publication(/:format)': 'loadPages',
+                ':publication(/:format/:apikey)': 'loadPages'
             },
 
-            loadPages: function (publication, format) {
+            loadPages: function (publication, format, apikey) {
                 var that = this;
 
                 this.publication = publication;
                 this.format = format || 'ipad_landscape';
+                this.apikey = apikey;
 
                 clearInterval(this.intervalId);
 

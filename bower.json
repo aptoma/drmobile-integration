@@ -1,0 +1,13 @@
+{
+  "name": "drmobile-integration",
+  "version": "0.1",
+  "homepage": "https://github.com/aptoma/drmobile-integration",
+  "authors": [
+    "Peter Rudolfsen <peter@aptoma.com>"
+  ],
+  "license": "Proprietary",
+  "private": true,
+  "dependencies": {
+    "aptoma-alf": "^1.5.1"
+  }
+}
